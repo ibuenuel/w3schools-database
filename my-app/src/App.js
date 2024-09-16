@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navigation from './components/Navigation';
 
 const api = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
@@ -64,6 +65,8 @@ function CategoryList() {
 
   return (
     <div className="container mx-auto p-4">
+      
+      <Navigation />
       <h1 className="text-2xl font-bold mb-4">Categories</h1>
       
       <button 
