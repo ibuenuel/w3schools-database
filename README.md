@@ -10,7 +10,7 @@ This repository provides:
 
 ## Prerequisite
 Make sure that the following software is installed:
-- ** Docker **
+- Docker
 
 ## Fork to your github account
 Go to github.com, create a new account or login.
@@ -63,11 +63,24 @@ When the docker container starts, it creates database named __w3schools__ with t
 and inserts the respective data. 
 
 ## Features
-1. Get and list all categories
-2. Create a new category
-3. Update an existing category
-4. Delete a category
-5. Give an error message to the user when trying to delete a category that can't be deleted
+1. Get and list all Products
+2. Get and list all Categories
+3. Get and list all Suppliers
+4. Create a new Product
+5. Create a new Categorie
+6. Create a new Supplier
+7. Update an existing Product
+8. Update an existing Product
+9. Update an existing Categorie
+10. Update an existing Supplier
+11. Delete a Product
+12. Delete a Categorie
+13. Delete a Supplier
+12. Filter by Category or Supplier (If its provided, to test see Products Page)
+13. Search Entity by Name
+14. Reset Filters and Search Term with a Button
+15. Sort by Entity Fields
+16. Pagination of the Table
 
 ## Journal
 ### 14.09.2024
