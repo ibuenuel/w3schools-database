@@ -10,6 +10,7 @@ import {
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
+import Suppliers from './pages/Suppliers';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/categories",
     element: <Categories />,
+  },
+  {
+    path: "/suppliers",
+    element: <Suppliers />,
   },
 ]);
 

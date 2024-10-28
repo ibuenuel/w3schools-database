@@ -72,6 +72,11 @@ function CategoryList() {
     setCurrentPage(1); // Reset to first page
   };
 
+  const resetFilters = () => {
+    setFilterCategoryName('');
+    setCurrentPage(1);
+  };
+
   // Filter categories based on search term
   const filteredCategories = categories.filter(category => 
     category.CategoryName.toLowerCase().includes(filterCategoryName.toLowerCase())
@@ -108,6 +113,14 @@ function CategoryList() {
           value={filterCategoryName}
           onChange={(e) => handleFilterChange(e.target.value)}
         />
+      </div>
+      <div className="flex justify-end">
+        <button 
+          className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
+          onClick={resetFilters}
+        >
+          Reset Filters
+        </button>
       </div>
       
       <button 
