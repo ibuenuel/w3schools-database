@@ -1,28 +1,18 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Navigation = () => {
   return (
     <nav className="flex justify-between items-center py-4">
       <ul className="flex">
         <li className="mr-6">
-          <a href="#" className="text-lg hover:text-blue-600 transition duration-300 ease-in-out">
-            Home
-          </a>
+            <Link className="text-lg hover:text-blue-600 transition duration-300 ease-in-out" to={"/home"}>Home</Link>
         </li>
         <li className="mr-6">
-          <a href="#" className="text-lg hover:text-blue-600 transition duration-300 ease-in-out">
-            Products
-          </a>
+        <Link className="text-lg hover:text-blue-600 transition duration-300 ease-in-out" to={"/products"}>Products</Link>          
         </li>
         <li className="mr-6">
-          <a href="#" className="text-lg hover:text-blue-600 transition duration-300 ease-in-out">
-            Login
-          </a>
-        </li>
-        <li>
-          <a href="#" className="text-lg hover:text-blue-600 transition duration-300 ease-in-out">
-            Cart
-          </a>
+        <Link className="text-lg hover:text-blue-600 transition duration-300 ease-in-out" to={"/categories"}>Categories</Link>          
         </li>
       </ul>
     </nav>
