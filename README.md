@@ -11,6 +11,7 @@ This repository provides:
 ## Prerequisite
 Make sure that the following software is installed:
 - Docker
+- If you are on Windows, please use WSL with Ubuntu for the setup and use the bash terminal
 
 ## Fork to your github account
 Go to github.com, create a new account or login.
@@ -27,7 +28,7 @@ code .
 Run the database and rest-api
 
 ```bash
-sudo docker-compose up
+sudo docker compose up
 ```
 
 Start the react app
@@ -83,6 +84,17 @@ and inserts the respective data.
 
 ## Journal
 ### 14.09.2024
-The project setup was quite difficult, as I am missing some linux and docker experience.
-After some try and errors and support from ChatGPT I made it finally work
+The project setup was quite challenging, but I was able to install it successfully using WSL. VirtualBox used too much RAM and the VM froze a lot, so I switched to WSL.
+
+### 28.10.2024
+Made some reasearch about routing and added routing functionality to the application. Added the needed Features as follows:
+- 3 Entities will be shown with the GET Method (Products, Categories, Suppliers)
+- Creating of 3 different  Entities with POST Method is working (Products, Categories, Suppliers)
+- Update of 3 different  Entities with PATCH Method is working (Products, Categories, Suppliers)
+- Delete of 3 different Entities with the DELETE Method is working (Products, Categories, Suppliers)
+- Added new Feature Filtering (Filter Entities)
+- Added Feature Pagination
+- Added Sort function (click table head)
+
+Wrote the technical documentation, documented the features in Markdown and updated the journal.
 
