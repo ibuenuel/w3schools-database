@@ -70,17 +70,16 @@ and inserts the respective data.
 5. Create a new Categorie
 6. Create a new Supplier
 7. Update an existing Product
-8. Update an existing Product
-9. Update an existing Categorie
-10. Update an existing Supplier
-11. Delete a Product
-12. Delete a Categorie
-13. Delete a Supplier
-12. Filter by Category or Supplier (If its provided, to test see Products Page)
-13. Search Entity by Name
-14. Reset Filters and Search Term with a Button
-15. Sort by Entity Fields
-16. Pagination of the Table
+8. Update an existing Categorie
+9. Update an existing Supplier
+10. Delete a Product
+11. Delete a Categorie
+12. Delete a Supplier
+13. Filter by Category or Supplier (If its provided, to test see Products Page)
+14. Search Entity by Name
+15. Reset Filters and Search Term with a Button
+16. Sort by Entity Fields
+17. Pagination of the Table
 
 ## Journal
 ### 14.09.2024
