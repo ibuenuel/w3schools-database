@@ -5,8 +5,8 @@ const api = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 function Suppliers() {
   const [suppliers, setSuppliers] = useState([]);
-  const [editableSupplierId, setEditableSupplierId] = useState(null); // Track which supplier is being edited
-  const [editedSupplier, setEditedSupplier] = useState({}); // Track changes to the edited supplier
+  const [editableSupplierId, setEditableSupplierId] = useState(null);
+  const [editedSupplier, setEditedSupplier] = useState({});
   const [filterSupplierName, setFilterSupplierName] = useState('');
   const [filterContactName, setFilterContactName] = useState('');
   const [filterAddress, setFilterAddress] = useState('');
@@ -15,6 +15,8 @@ function Suppliers() {
   const [filterCountry, setFilterCountry] = useState('');
   const [filterPhone, setFilterPhone] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState('asc');
   const suppliersPerPage = 10;
 
   useEffect(() => {
@@ -23,7 +25,6 @@ function Suppliers() {
       .then(data => setSuppliers(data));
   }, []);
 
-  // Handle input change for editing supplier
   const handleInputChange = (supplierId, field, value) => {
     setEditedSupplier(prev => ({
       ...prev,
@@ -34,7 +35,6 @@ function Suppliers() {
     }));
   };
 
-  // Handle patch request for supplier update
   const handleSave = (supplierId) => {
     const updatedSupplier = editedSupplier[supplierId];
     fetch(`${api}/suppliers/${supplierId}`, {
@@ -49,14 +49,13 @@ function Suppliers() {
           setSuppliers(suppliers.map(supplier =>
             supplier.SupplierID === supplierId ? { ...supplier, ...updatedSupplier } : supplier
           ));
-          setEditableSupplierId(null); // Exit edit mode
+          setEditableSupplierId(null);
         } else {
           alert('Failed to update supplier');
         }
       });
   };
 
-  // Handle delete request
   const handleDelete = (supplierId) => {
     fetch(`${api}/suppliers/${supplierId}`, {
       method: 'DELETE',
@@ -70,7 +69,6 @@ function Suppliers() {
       });
   };
 
-  // Handle filter change
   const handleFilterChange = (field, value) => {
     if (field === 'supplierName') setFilterSupplierName(value);
     if (field === 'contactName') setFilterContactName(value);
@@ -79,7 +77,7 @@ function Suppliers() {
     if (field === 'postalCode') setFilterPostalCode(value);
     if (field === 'country') setFilterCountry(value);
     if (field === 'phone') setFilterPhone(value);
-    setCurrentPage(1); // Reset to first page
+    setCurrentPage(1);
   };
 
   const resetFilters = () => {
@@ -93,8 +91,22 @@ function Suppliers() {
     setCurrentPage(1);
   };
 
-  // Filter suppliers based on search term
-  const filteredSuppliers = suppliers.filter(supplier => 
+  const handleSort = (field) => {
+    const order = (sortField === field && sortOrder === 'asc') ? 'desc' : 'asc';
+    setSortField(field);
+    setSortOrder(order);
+  };
+
+  const sortedSuppliers = [...suppliers].sort((a, b) => {
+    if (!sortField) return 0;
+    const aValue = a[sortField];
+    const bValue = b[sortField];
+    if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const filteredSuppliers = sortedSuppliers.filter(supplier => 
     supplier.SupplierName.toLowerCase().includes(filterSupplierName.toLowerCase()) &&
     supplier.ContactName.toLowerCase().includes(filterContactName.toLowerCase()) &&
     supplier.Address.toLowerCase().includes(filterAddress.toLowerCase()) &&
@@ -104,7 +116,6 @@ function Suppliers() {
     supplier.Phone.toLowerCase().includes(filterPhone.toLowerCase())
   );
 
-  // Pagination logic
   const indexOfLastSupplier = currentPage * suppliersPerPage;
   const indexOfFirstSupplier = indexOfLastSupplier - suppliersPerPage;
   const currentSuppliers = filteredSuppliers.slice(indexOfFirstSupplier, indexOfLastSupplier);
@@ -263,7 +274,7 @@ function Suppliers() {
                       const { new: _, ...rest } = prev;
                       return rest;
                     });
-                    window.location.reload(); // Refresh the page
+                    window.location.reload();
                   });
               }}
             >
@@ -282,13 +293,27 @@ function Suppliers() {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Supplier Name</th>
-            <th className="py-2 px-4 border-b">Contact Name</th>
-            <th className="py-2 px-4 border-b">Address</th>
-            <th className="py-2 px-4 border-b">City</th>
-            <th className="py-2 px-4 border-b">Postal Code</th>
-            <th className="py-2 px-4 border-b">Country</th>
-            <th className="py-2 px-4 border-b">Phone</th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('SupplierName')}>
+              Supplier Name {sortField === 'SupplierName' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('ContactName')}>
+              Contact Name {sortField === 'ContactName' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('Address')}>
+              Address {sortField === 'Address' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('City')}>
+              City {sortField === 'City' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('PostalCode')}>
+              Postal Code {sortField === 'PostalCode' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('Country')}>
+              Country {sortField === 'Country' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('Phone')}>
+              Phone {sortField === 'Phone' && (sortOrder === 'asc' ? '↑' : '↓')}
+            </th>
             <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>

@@ -9,6 +9,7 @@ function CategoryList() {
   const [editedCategory, setEditedCategory] = useState({}); // Track changes to the edited category
   const [filterCategoryName, setFilterCategoryName] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const categoriesPerPage = 10;
 
   useEffect(() => {
@@ -76,6 +77,25 @@ function CategoryList() {
     setFilterCategoryName('');
     setCurrentPage(1);
   };
+
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedCategories = [...categories].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? 1 : -1;
+    }
+    return 0;
+  });
+
 
   // Filter categories based on search term
   const filteredCategories = categories.filter(category => 
@@ -184,9 +204,13 @@ function CategoryList() {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Category Name</th>
-            <th className="py-2 px-4 border-b">Description</th>
-            <th className="py-2 px-4 border-b">Actions</th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('CategoryName')}>
+              Category Name {sortConfig.key === 'CategoryName' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('Description')}>
+              Description {sortConfig.key === 'Description' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+              </th>
+            <th className="py-2 px-4 border-b cursor-pointer">Actions</th>
           </tr>
         </thead>
         <tbody>

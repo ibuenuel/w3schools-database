@@ -13,6 +13,7 @@ function ProductList() {
   const [filterCategory, setFilterCategory] = useState('');
   const [filterSupplier, setFilterSupplier] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const productsPerPage = 10;
 
   useEffect(() => {
@@ -97,7 +98,25 @@ function ProductList() {
     setCurrentPage(1);
   };
 
-  const filteredProducts = products.filter(product => {
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedProducts = [...products].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const filteredProducts = sortedProducts.filter(product => {
     return (
       product.ProductName.toLowerCase().includes(filterProductName.toLowerCase()) &&
       (filterCategory === '' || product.CategoryID === parseInt(filterCategory)) &&
@@ -259,11 +278,21 @@ function ProductList() {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Product Name</th>
-            <th className="py-2 px-4 border-b">Price</th>
-            <th className="py-2 px-4 border-b">Unit</th>
-            <th className="py-2 px-4 border-b">Supplier</th>
-            <th className="py-2 px-4 border-b">Category</th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('ProductName')}>
+              Product Name {sortConfig.key === 'ProductName' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('Price')}>
+              Price {sortConfig.key === 'Price' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('Unit')}>
+              Unit {sortConfig.key === 'Unit' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('SupplierID')}>
+              Supplier {sortConfig.key === 'SupplierID' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
+            <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort('CategoryID')}>
+              Category {sortConfig.key === 'CategoryID' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+            </th>
             <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
