@@ -206,7 +206,7 @@ function ProductList() {
             type="text"
             placeholder="Price"
             value={editedProduct['new']?.Price || ''}
-            onChange={(e) => handleInputChange('new', 'Unit', e.target.value)}
+            onChange={(e) => handleInputChange('new', 'Price', e.target.value)}
           />
           <input
             className="border p-2 mb-2 w-full"

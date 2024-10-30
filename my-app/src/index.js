@@ -14,7 +14,7 @@ import Suppliers from './pages/Suppliers';
 const router = createBrowserRouter([
   {
     path: "",
-    element: <App />,
+    element: <Products />,
   },
   {
     path: "/products",
