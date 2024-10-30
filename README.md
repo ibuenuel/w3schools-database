@@ -35,6 +35,7 @@ Start the react app
 
 ```bash
 cd my-app
+npm install
 npm start
 ```
 
