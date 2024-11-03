@@ -14,6 +14,9 @@ const Navigation = () => {
         <li className="mr-6">
         <Link className="text-lg hover:text-blue-600 transition duration-300 ease-in-out" to={"/suppliers"}>Suppliers</Link>          
         </li>
+        <li className="mr-6">
+        <Link className="text-lg hover:text-blue-600 transition duration-300 ease-in-out" to={"/customers"}>Customers</Link>          
+        </li>
       </ul>
     </nav>
   );
